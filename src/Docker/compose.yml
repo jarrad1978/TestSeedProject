@@ -1,0 +1,48 @@
+﻿services:
+  TestSeedProject.db:
+    container_name: TestSeedProject_db
+    image: mysql:8.0.28
+    security_opt:
+      - seccomp:unconfined
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root$$!
+    command: --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    ports:
+      - "3309:3306"
+    volumes:
+      - TestSeedProject-db-data:/var/lib/mysql
+    networks:
+      - bp.network
+  
+  TestSeedProject.redis:
+    container_name: TestSeedProject_redis
+    image: redis:7
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - TestSeedProject-redis-data:/data
+    networks:
+      - bp.network
+
+networks:
+  bp.network:
+    driver: bridge
+    name: bp.network
+
+volumes:
+  TestSeedProject-db-data:
+    name: TestSeedProject-db-data
+    driver: local
+    driver_opts:
+      type: none
+      device: ./Docker_Volumes/test-mysql
+      o: bind
+  TestSeedProject-redis-data:
+    name: TestSeedProject-redis-data
+    driver: local
+    driver_opts:
+      type: none
+      device: ./Docker_Volumes/test-redis
+      o: bind

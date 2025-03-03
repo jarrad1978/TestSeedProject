@@ -1,0 +1,137 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXTheme": {
+      "version": "4.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.TextTemplateManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Chat": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.LanguageManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.FileManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict.Pro": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.Gdpr": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.AuditLogging.Pro": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.CmsKit.Pro": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Saas": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity.Pro": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account.Pro": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "TestSeedProject.Application": {
+      "path": "src/TestSeedProject.Application/TestSeedProject.Application.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.Application.Tests": {
+      "path": "test/TestSeedProject.Application.Tests/TestSeedProject.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "TestSeedProject.Domain.Shared": {
+      "path": "src/TestSeedProject.Domain.Shared/TestSeedProject.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.Application.Contracts": {
+      "path": "src/TestSeedProject.Application.Contracts/TestSeedProject.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.HttpApi": {
+      "path": "src/TestSeedProject.HttpApi/TestSeedProject.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.HttpApi.Client": {
+      "path": "src/TestSeedProject.HttpApi.Client/TestSeedProject.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.Web": {
+      "path": "src/TestSeedProject.Web/TestSeedProject.Web.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.Web.Tests": {
+      "path": "test/TestSeedProject.Web.Tests/TestSeedProject.Web.Tests.abppkg",
+      "folder": "test"
+    },
+    "TestSeedProject.EntityFrameworkCore.Tests": {
+      "path": "test/TestSeedProject.EntityFrameworkCore.Tests/TestSeedProject.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "TestSeedProject.EntityFrameworkCore": {
+      "path": "src/TestSeedProject.EntityFrameworkCore/TestSeedProject.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.TestBase": {
+      "path": "test/TestSeedProject.TestBase/TestSeedProject.TestBase.abppkg",
+      "folder": "test"
+    },
+    "TestSeedProject.Domain.Tests": {
+      "path": "test/TestSeedProject.Domain.Tests/TestSeedProject.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "TestSeedProject.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/TestSeedProject.HttpApi.Client.ConsoleTestApp/TestSeedProject.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "TestSeedProject.DbMigrator": {
+      "path": "src/TestSeedProject.DbMigrator/TestSeedProject.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.Web.Public": {
+      "path": "src/TestSeedProject.Web.Public/TestSeedProject.Web.Public.abppkg",
+      "folder": "src"
+    },
+    "TestSeedProject.Domain": {
+      "path": "src/TestSeedProject.Domain/TestSeedProject.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  testseedproject-web:
+    image: mycompanyname/testseedproject-web:latest
+    container_name: testseedproject-web
+    hostname: testseedproject-web
+    build:
+      context: ../../
+      dockerfile: src/TestSeedProject.Web/Dockerfile.local
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80;
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.pfx
+      - Kestrel__Certificates__Default__Password=f597bf03-5133-410a-86e5-9f071dd55e58
+      - App__SelfUrl=https://localhost:44353
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__Authority=http://testseedproject-web
+      - App__HealthCheckUrl=http://testseedproject-web/health-status      
+      - App__MVCPublicUrl=https://localhost:44363
+      - ConnectionStrings__Default=Server=mysql;Port=3306;Userid=root;Password=myPassw0rd;Database=TestSeedProject;
+      - Redis__Configuration=redis
+    ports:
+      - "44353:443"
+    restart: on-failure
+    volumes:
+      - ./certs:/root/certificate
+    networks:
+      - abp-network
+
+  
+
+  testseedproject-web-public:
+    image: mycompanyname/testseedproject-web-public:latest
+    container_name: testseedproject-web-public
+    build:
+      context: ../../
+      dockerfile: src/TestSeedProject.Web.Public/Dockerfile.local
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80;
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.pfx
+      - Kestrel__Certificates__Default__Password=f597bf03-5133-410a-86e5-9f071dd55e58
+      - App__SelfUrl=https://localhost:44363
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__IsOnK8s=true
+      - AuthServer__Authority=https://localhost:44367/
+      - RemoteServices__Default__BaseUrl=http://testseedproject-api         
+      - AuthServer__MetaAddress=http://testseedproject-authserver
+      - RemoteServices__AbpAccountPublic__BaseUrl=http://testseedproject-authserver
+      - ConnectionStrings__Default=Server=mysql;Port=3306;Userid=root;Password=myPassw0rd;Database=TestSeedProject;
+      - Redis__Configuration=redis
+    ports:
+      - "44306:443"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
+    volumes:
+      - ./certs:/root/certificate
+    networks:
+      - abp-network  
+  
+  db-migrator:
+    image: mycompanyname/testseedproject-db-migrator:latest
+    container_name: db-migrator
+    build:
+      context: ../../
+      dockerfile: src/TestSeedProject.DbMigrator/Dockerfile.local
+    environment:
+      - OpenIddict__Applications__TestSeedProject_Web__RootUrl=https://localhost:44353
+      - OpenIddict__Applications__TestSeedProject_Swagger__RootUrl=https://localhost:44300      
+      - OpenIddict__Applications__TestSeedProject_Web_Public_Tiered__RootUrl=https://localhost:44330
+      - OpenIddict__Applications__TestSeedProject_Web_Public__RootUrl=https://localhost:44363
+      - ConnectionStrings__Default=Server=mysql;Port=3306;Userid=root;Password=myPassw0rd;Database=TestSeedProject;
+      - Redis__Configuration=redis
+    restart: on-failure
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - abp-network
+  
+  mysql:
+    container_name: mysql-db
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: myPassw0rd
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks: 
+      - abp-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5    
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - abp-network
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+
+volumes:
+  mysql_data:
+    name: testseedproject_mysql_data
+networks:
+  abp-network:
+    name: testseedproject-network
+    driver: bridge
