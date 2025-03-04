@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using TestSeedProject.Books;
 using Volo.Abp.Data;
@@ -30,29 +30,32 @@ public class TestSeedProjectDataSeederContributor
         }
         Console.Write($"current tenant: {_currentTenant.Id}");
 
-        if (await _bookRepository.GetCountAsync() <= 0)
+        using (_currentTenant.Change(context?.TenantId))
         {
-            await _bookRepository.InsertAsync(
-                new Book
-                {
-                    Name = "1984",
-                    Type = BookType.Dystopia,
-                    PublishDate = new DateTime(1949, 6, 8),
-                    Price = 19.84f
-                },
-                autoSave: true
-            );
+            if (await _bookRepository.GetCountAsync() <= 0)
+            {
+                await _bookRepository.InsertAsync(
+                    new Book
+                    {
+                        Name = "1984",
+                        Type = BookType.Dystopia,
+                        PublishDate = new DateTime(1949, 6, 8),
+                        Price = 19.84f
+                    },
+                    autoSave: true
+                );
 
-            await _bookRepository.InsertAsync(
-                new Book
-                {
-                    Name = "The Hitchhiker's Guide to the Galaxy",
-                    Type = BookType.ScienceFiction,
-                    PublishDate = new DateTime(1995, 9, 27),
-                    Price = 42.0f
-                },
-                autoSave: true
-            );
+                await _bookRepository.InsertAsync(
+                    new Book
+                    {
+                        Name = "The Hitchhiker's Guide to the Galaxy",
+                        Type = BookType.ScienceFiction,
+                        PublishDate = new DateTime(1995, 9, 27),
+                        Price = 42.0f
+                    },
+                    autoSave: true
+                );    
+            }
         }
     }
 }
